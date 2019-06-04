@@ -26,8 +26,9 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            // Default location for angular to check for stylesheets
             "styles": [
-              "src/styles.scss"
+              "src/assets/scss/styles.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
