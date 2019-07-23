@@ -8,7 +8,7 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'pean-rsvp';  
+  title = 'pean-rsvp';
   navOpen: boolean;
   minHeight: string;
   private _initWinHeight = 0;

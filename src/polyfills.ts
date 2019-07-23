@@ -58,9 +58,9 @@
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 /***************************************************************************************************
- * APPLICATION IMPORTS
- */
- // Global Polyfill
- // https://auth0.com/blog/real-world-angular-series-part-1/
- (window as any).global = window;
+* APPLICATION IMPORTS
+*/
+// Global Polyfill
+// https://auth0.com/blog/real-world-angular-series-part-1/
+(window as any).global = window;
 
