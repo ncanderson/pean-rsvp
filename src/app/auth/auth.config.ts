@@ -9,7 +9,7 @@ interface AuthConfig {
 }
 
 export const AUTH_CONFIG: AuthConfig = {
-  CLIENT_ID: 'FfCQdeCj9jZoZhsKykSeO1pL7sIFFG0p',
+  CLIENT_ID: '0EnRkTwt2wyAdfDkYvTieRdlp12M63aM',
   CLIENT_DOMAIN: 'ncanderson.auth0.com', // e.g., you.auth0.com
   AUDIENCE: 'http://localhost:8083/api/', // e.g., http://localhost:8083/api/
   REDIRECT: `${ENV.BASE_URI}/callback`,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AUTH_CONFIG } from './auth.config';
+import { ENV } from './../core/env.config';
 import * as auth0 from 'auth0-js';
 
 @Injectable()
@@ -38,6 +39,9 @@ export class AuthService {
 
   login() {
     // Auth0 authorize request
+    console.log(this);
+    console.log(this._auth0.baseOptions);
+
     this._auth0.authorize();
   }
 
@@ -107,4 +111,5 @@ export class AuthService {
       }
     });
   }
+
 }
