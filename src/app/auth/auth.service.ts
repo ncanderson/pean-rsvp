@@ -23,6 +23,7 @@ export class AuthService {
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   loggingIn: boolean;
+  isAdmin: boolean;
 
   constructor(private router: Router) {
     // If app auth token is not expired, request new token
@@ -70,12 +71,19 @@ export class AuthService {
     });
   }
 
-  private _setSession(authResult, profile?) {
+  private _setSession(authResult, profile) {
     this.expiresAt = (authResult.expiresIn * 1000) + Date.now();
     // Store expiration in local storage to access in constructor
     localStorage.setItem('expires_at', JSON.stringify(this.expiresAt));
     this.accessToken = authResult.accessToken;
+   
+    // If initial login, set profile and admin information
+    if (profile) {
+      this.isAdmin = this._checkAdmin(profile);
+    }
+    
     this.userProfile = profile;
+
     // Update login status in loggedIn$ stream
     this.setLoggedIn(true);
     this.loggingIn = false;
@@ -84,6 +92,12 @@ export class AuthService {
   private _clearExpiration() {
     // Remove token expiration from localStorage
     localStorage.removeItem('expires_at');
+  }
+   
+  // Check if the user has admin role
+  private _checkAdmin(profile) {
+    const roles = profile[AUTH_CONFIG.NAMESPACE] || [];
+    return roles.indexOf('admin') > -1;
   }
 
   logout() {

@@ -1,3 +1,7 @@
+WIP:
+https://auth0.com/blog/real-world-angular-series-part-2/#features
+set up PG connection, use in place of all mongodb connections
+
 # PeanRsvp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.7.
