@@ -49,4 +49,10 @@ module.exports = function(app, config) {
     res.send('API works');
   });
 
+  //   // GET list of public events starting in the future
+  // app.get('/api/events', (req, res) => {
+
+
+  // });
+
 };
