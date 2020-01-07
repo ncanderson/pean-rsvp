@@ -6,6 +6,24 @@
 
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
+const { Pool, Client } = require('pg')
+
+var env = process.env.NODE_ENV || 'development';
+var dbConfig = require('./config')[env];
+
+/*
+ |--------------------------------------
+ | DB Connections
+ |--------------------------------------
+ */
+
+const pool = new Pool({
+  user: dbConfig.user,
+  host: dbConfig.host,
+  database: dbConfig.database,
+  password: dbConfig.password,
+  port: dbConfig.port
+})
 
 /*
  |--------------------------------------
@@ -49,10 +67,18 @@ module.exports = function(app, config) {
     res.send('API works');
   });
 
-  //   // GET list of public events starting in the future
-  // app.get('/api/events', (req, res) => {
+  // GET list of public events starting in the future
+  app.get('/api/events', (req, res) => {
 
+    var query = 
+      'select * ' + 
+      'from pean_rsvp.event;';
 
-  // });
+    pool.query(query, (err, res) => {
+      console.log(err, res)
+      pool.end()
+    })
+
+  });
 
 };
