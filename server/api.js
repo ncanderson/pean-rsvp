@@ -75,25 +75,25 @@ module.exports = function(app, config) {
       'from pean_rsvp.event;';
 
     pool.query(query, (err, res) => {
-      
+
       let data = res.rows;
       let eventsArr = [];
-
+   
       if (err) {
         return res.status(500).send({message: err.message});
       }
 
-      console.log(data);
-
       if (data) {
-        data.forEach(event => {
+        data.forEach(event => {          
           eventsArr.push(event);
         });
       }
 
       pool.end()
-      return data; //  eventsArr;
       
+      console.log(eventsArr);
+      req.send(eventsArr);
+
     })
 
   });
