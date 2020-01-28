@@ -75,23 +75,23 @@ module.exports = function(app, config) {
       'select * ' + 
       'from pean_rsvp.event;';
     
+    var eventsArr = [];
+    
     pool.query(query, (sqlErr, sqlRes) => {
 
       let data = sqlRes.rows;
-      let eventsArr = [];
 
       if (sqlErr) {
         return sqlRes.status(500).send({message: sqlErr.message});
       }
 
       if (data) {
-        data.forEach(events => {          
+        data.forEach(event => {          
           eventsArr.push(event);
         });
       }
 
       pool.end();
-      console.log(eventsArr);  
       res.send(eventsArr);
 
     });
