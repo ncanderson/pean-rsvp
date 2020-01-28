@@ -70,31 +70,31 @@ module.exports = function(app, config) {
   // GET list of public events starting in the future
   app.get('/api/events', (req, res) => {
 
+    // this is the query...
     var query = 
       'select * ' + 
       'from pean_rsvp.event;';
+    
+    pool.query(query, (sqlErr, sqlRes) => {
 
-    pool.query(query, (err, res) => {
-
-      let data = res.rows;
+      let data = sqlRes.rows;
       let eventsArr = [];
-   
-      if (err) {
-        return res.status(500).send({message: err.message});
+
+      if (sqlErr) {
+        return sqlRes.status(500).send({message: sqlErr.message});
       }
 
       if (data) {
-        data.forEach(event => {          
+        data.forEach(events => {          
           eventsArr.push(event);
         });
       }
 
-      pool.end()
-      
-      console.log(eventsArr);
-      req.send(eventsArr);
+      pool.end();
+      console.log(eventsArr);  
+      res.send(eventsArr);
 
-    })
+    });
 
   });
 
