@@ -73,7 +73,9 @@ module.exports = function(app, config) {
     // this is the query...
     var query = 
       'select * ' + 
-      'from pean_rsvp.event;';
+      'from pean_rsvp.event ' + 
+      'where view_public = true' +
+      '  and datetime_start >= now();';
     
     var eventsArr = [];
     
@@ -97,5 +99,36 @@ module.exports = function(app, config) {
     });
 
   });
+
+  // GET list of public events starting in the future
+  app.get('/api/events/admin', jwtCheck, adminCheck, (req, res) => {
+
+    // this is the query...
+    var query = 
+      'select * ' + 
+      'from pean_rsvp.event;';
+    
+    var eventsArr = [];
+    
+    pool.query(query, (sqlErr, sqlRes) => {
+
+      let data = sqlRes.rows;
+
+      if (sqlErr) {
+        return sqlRes.status(500).send({message: sqlErr.message});
+      }
+
+      if (data) {
+        data.forEach(event => {          
+          eventsArr.push(event);
+        });
+      }
+
+      pool.end();
+      res.send(eventsArr);
+
+    });
+
+  });  
 
 };
