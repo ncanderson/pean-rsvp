@@ -1,6 +1,5 @@
 WIP:
-https://auth0.com/blog/real-world-angular-series-part-2/#features
-set up PG connection, use in place of all mongodb connections
+add all routes; the guide will tackle hitting those routes from angular
 
 Don't define models in the service, just pass JSON up. Define models in angular, and let the client handle serialization: https://dpopescu.me/2016/10/31/using-ts-serializer-to-serialize-and-deserialize-json-objects/
 
