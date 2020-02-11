@@ -132,8 +132,7 @@ module.exports = function(app, config) {
   });
 
   // Get event by Id
-    // GET event by event ID
-  app.get('/api/event/:id', /*jwtCheck,*/ (req, res) => {
+  app.get('/api/event/:id', jwtCheck, (req, res) => {
 
     var query = 
       'select * ' + 
@@ -145,8 +144,6 @@ module.exports = function(app, config) {
     var eventsArr = [];
     
     pool.query(query, values, (sqlErr, sqlRes) => {
-
-console.log(query);
 
       let data = sqlRes.rows;
 
@@ -166,4 +163,35 @@ console.log(query);
     });
   });  
 
+  // Get rsvp by eventId
+  app.get('/api/event/:eventId/rsvps', /*jwtCheck,*/ (req, res) => {
+
+    var query = 
+      'select * ' + 
+      'from pean_rsvp.rsvp ' + 
+      'where id_event = $1;';     
+    var values = [req.params.eventId];  // get the param off the request
+
+    // return object
+    var eventsArr = [];
+    
+    pool.query(query, values, (sqlErr, sqlRes) => {
+
+      let data = sqlRes.rows;
+
+      if (sqlErr) {
+        return sqlRes.status(500).send({message: sqlErr.message});
+      }
+
+      if (data) {
+        data.forEach(event => {          
+          eventsArr.push(event);
+        });
+      }
+
+      pool.end();
+      res.send(eventsArr);
+
+    });
+  }); 
 };
