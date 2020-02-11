@@ -100,7 +100,7 @@ module.exports = function(app, config) {
 
   });
 
-  // GET list of public events starting in the future
+  // GET list of all events
   app.get('/api/events/admin', jwtCheck, adminCheck, (req, res) => {
 
     // this is the query...
@@ -129,6 +129,41 @@ module.exports = function(app, config) {
 
     });
 
+  });
+
+  // Get event by Id
+    // GET event by event ID
+  app.get('/api/event/:id', /*jwtCheck,*/ (req, res) => {
+
+    var query = 
+      'select * ' + 
+      'from pean_rsvp.event ' + 
+      'where id_event = $1;';     
+    var values = [req.params.id];  // get the param off the request
+
+    // return object
+    var eventsArr = [];
+    
+    pool.query(query, values, (sqlErr, sqlRes) => {
+
+console.log(query);
+
+      let data = sqlRes.rows;
+
+      if (sqlErr) {
+        return sqlRes.status(500).send({message: sqlErr.message});
+      }
+
+      if (data) {
+        data.forEach(event => {          
+          eventsArr.push(event);
+        });
+      }
+
+      pool.end();
+      res.send(eventsArr);
+
+    });
   });  
 
 };
